@@ -23,6 +23,8 @@ namespace Earning.Demo
 
             Console.Write("Press any key to exit... ");
             Console.ReadKey();
+
+            connection.Dispose();
         }
 
         private static void HandleTimer()
