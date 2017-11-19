@@ -24,6 +24,7 @@ namespace Earning.Demo.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +34,12 @@ namespace Earning.Demo.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 
             app.UseMvc();
         }
