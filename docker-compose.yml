@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  earning.demo.api:
+    image: earning.demo.api
+    build:
+      context: ./Earning.Demo.Api
+      dockerfile: Dockerfile
+
+  earning.demo:
+    image: earning.demo.api
+    build:
+      context: ./Earning.Demo
+      dockerfile: Dockerfile
