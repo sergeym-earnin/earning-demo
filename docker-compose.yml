@@ -6,9 +6,19 @@ services:
     build:
       context: ./Earning.Demo.Api
       dockerfile: Dockerfile
+    ports:
+      - "8080:49160"
+
+  earning.demo.web:
+    image: earning.demo.web
+    build:
+      context: ./Earning.Demo.Web
+      dockerfile: Dockerfile
+    ports:
+      - "80:49161"
 
   earning.demo:
-    image: earning.demo.api
+    image: earning.demo
     build:
       context: ./Earning.Demo
       dockerfile: Dockerfile
