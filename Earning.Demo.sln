@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{6DF7
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DemoApplication", "DemoApplication\DemoApplication.sfproj", "{333A98C8-BFBF-4CFC-BF8D-6872D5AC8E85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Shared", "Earning.Demo.Shared\Earning.Demo.Shared.csproj", "{179DE22C-DC55-4946-90F8-B9EC284F3CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Earning.Demo.Shared", "Earning.Demo.Shared\Earning.Demo.Shared.csproj", "{179DE22C-DC55-4946-90F8-B9EC284F3CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,8 +69,12 @@ Global
 		{333A98C8-BFBF-4CFC-BF8D-6872D5AC8E85}.Release|x64.Deploy.0 = Release|x64
 		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Debug|x64.Build.0 = Debug|Any CPU
 		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Release|x64.ActiveCfg = Release|Any CPU
+		{179DE22C-DC55-4946-90F8-B9EC284F3CB9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
