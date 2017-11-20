@@ -18,8 +18,8 @@ namespace Earning.Demo.Api.Controllers
             {
                 return new Dictionary<string, string>
                 {
-                    { storage.REDIS_API_ITEM_KEY, storage.Get(storage.REDIS_API_ITEM_KEY) },
-                    { storage.REDIS_ITEM_KEY, storage.Get(storage.REDIS_ITEM_KEY) }
+                    { storage.Configuration.ApiRedisKey, storage.Get(storage.Configuration.ApiRedisKey) },
+                    { storage.Configuration.WorkerRedisKey, storage.Get(storage.Configuration.WorkerRedisKey) }
                 };
             }
         }
@@ -40,7 +40,7 @@ namespace Earning.Demo.Api.Controllers
         {
             using (StorageService storage = new StorageService())
             {
-                storage.Increment(storage.REDIS_API_ITEM_KEY, value);
+                storage.Increment(storage.Configuration.ApiRedisKey, value);
             }
         }
 

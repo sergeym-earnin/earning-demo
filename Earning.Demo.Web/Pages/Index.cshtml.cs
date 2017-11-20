@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Earning.Demo.Shared;
 
 namespace Earning.Demo.Web.Pages
 {
     public class IndexModel : PageModel
     {
+        public IConfigurationService Configuration = new ConfigurationService();
+
         public void OnGet()
         {
 

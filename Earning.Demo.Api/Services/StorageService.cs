@@ -1,20 +1,18 @@
-﻿using StackExchange.Redis;
+﻿using Earning.Demo.Shared;
+using StackExchange.Redis;
 using System;
 
 namespace Earning.Demo.Api.Services
 {
     public class StorageService: IDisposable
     {
-        public string REDIS_API_ITEM_KEY = "API_KEY";
-        public string REDIS_ITEM_KEY = "WORKER_KEY";
-
-        string CONNECTION_STRING = "earnindemo.redis.cache.windows.net:6380,password=aGxKWzVUlpzQLyvDOP8cXYC3MMl99zOsdMU8QtNqNi0=,ssl=True,abortConnect=False";
-
         ConnectionMultiplexer _connection;
+        public IConfigurationService Configuration;
 
         public StorageService()
         {
-            _connection = ConnectionMultiplexer.Connect(CONNECTION_STRING);
+            Configuration = new ConfigurationService();
+            _connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
         }
 
         public void Increment(string key, int incrementValue)

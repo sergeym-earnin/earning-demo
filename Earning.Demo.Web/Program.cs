@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Earning.Demo.Shared;
+using StackExchange.Redis;
+using Earning.Demo.Shared.Services;
 
 namespace Earning.Demo.Web
 {
@@ -14,20 +17,19 @@ namespace Earning.Demo.Web
     {
         public static void Main(string[] args)
         {
+            IConfigurationService Configuration = new ConfigurationService();
+            FabricService.LogVariables(Configuration.WebRedisKey);
+
             BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("settings.json", true)
-                .Build();
-
             return WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(config)
                 .UseStartup<Startup>()
                 .Build();
         }
+
+
     }
 }
