@@ -25,6 +25,8 @@ namespace Earning.Demo.Shared
         public string ServicePackageName { get; set; }
         public string ServicePackageVersionInstance { get; set; }
         public string PackageFileName { get; set; }
+        public string ApiHostPort { get; set; }
+        public string WebHostPort { get; set; }
 
         public ConfigurationService()
         {
@@ -47,7 +49,9 @@ namespace Earning.Demo.Shared
             ApiRedisKey = "API_KEY";
             WorkerRedisKey = "WORKER_KEY";
             WebRedisKey = "WEB_KEY";
-            ApiUrl = "http://localhost:50229";
+            ApiHostPort = "8080";
+            WebHostPort = "80";
+            ApiUrl = "http://localhost:8080";
             RedisConnectionString = "earnindemo.redis.cache.windows.net:6380,password=aGxKWzVUlpzQLyvDOP8cXYC3MMl99zOsdMU8QtNqNi0=,ssl=True,abortConnect=False";
         }
     }

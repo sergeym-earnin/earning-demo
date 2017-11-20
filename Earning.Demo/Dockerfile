@@ -1,6 +1,5 @@
 FROM microsoft/dotnet
 WORKDIR /app
 
-# copy and build everything else
-COPY . .
+COPY .\bin\Release\PublishOutput .
 ENTRYPOINT ["dotnet", "Earning.Demo.dll"]

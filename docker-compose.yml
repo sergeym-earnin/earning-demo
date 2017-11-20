@@ -7,7 +7,7 @@ services:
       context: ./Earning.Demo.Api
       dockerfile: Dockerfile
     ports:
-      - "8080:49160"
+      - "8080:8080"
 
   earning.demo.web:
     image: earning.demo.web
@@ -15,10 +15,15 @@ services:
       context: ./Earning.Demo.Web
       dockerfile: Dockerfile
     ports:
-      - "80:49161"
+      - "80:80"
 
   earning.demo:
     image: earning.demo
     build:
       context: ./Earning.Demo
       dockerfile: Dockerfile
+
+networks:
+  default:
+    external:
+      name: nat

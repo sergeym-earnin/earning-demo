@@ -22,5 +22,7 @@
         string ServicePackageName { get; set; }
         string ServicePackageVersionInstance { get; set; }
         string PackageFileName { get; set; }
+        string ApiHostPort { get; set; }
+        string WebHostPort { get; set; }
     }
 }

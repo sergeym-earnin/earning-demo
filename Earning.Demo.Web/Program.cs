@@ -15,11 +15,10 @@ namespace Earning.Demo.Web
 {
     public class Program
     {
+        static IConfigurationService Configuration = new ConfigurationService();
         public static void Main(string[] args)
         {
-            IConfigurationService Configuration = new ConfigurationService();
             FabricService.LogVariables(Configuration.WebRedisKey);
-
             BuildWebHost(args).Run();
         }
 
@@ -27,6 +26,7 @@ namespace Earning.Demo.Web
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls($"http://localhost:{Configuration.WebHostPort}")
                 .Build();
         }
 
