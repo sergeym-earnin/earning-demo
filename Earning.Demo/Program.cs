@@ -16,15 +16,17 @@ namespace Earning.Demo
         {
             Console.WriteLine($"MachineName: {Environment.MachineName}");
             Console.WriteLine("[WORKER STARTED]:" + (args.Length > 0 ? args[0] : String.Empty));
+            using (connection)
+            using (Timer timer = new Timer(10000))
+            {
 
-            Timer timer = new Timer(10000);
-            timer.Elapsed += (sender, e) => HandleTimer();
-            timer.Start();
+                timer.Elapsed += (sender, e) => HandleTimer();
+                timer.Start();
 
-            Console.Write("Press any key to exit... ");
-            Console.ReadKey();
 
-            connection.Dispose();
+                Console.Write("Press any key to exit... ");
+                Console.ReadKey();
+            }
         }
 
         private static void HandleTimer()

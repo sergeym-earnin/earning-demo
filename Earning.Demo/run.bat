@@ -1,0 +1,1 @@
+dotnet Earning.Demo.dll
