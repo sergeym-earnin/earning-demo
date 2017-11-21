@@ -7,11 +7,11 @@ namespace Earning.Demo.Api
 {
     public class Program
     {
-        static IConfigurationService Configuration = new ConfigurationService();
+        static IConfigurationProvider Configuration = new ConfigurationProvider();
 
         public static void Main(string[] args)
         {
-            FabricService.LogVariables(Configuration.ApiRedisKey);
+            EnviromentService.LogVariables(Configuration.ApiRedisKey);
             BuildWebHost(args).Run();
         }
 

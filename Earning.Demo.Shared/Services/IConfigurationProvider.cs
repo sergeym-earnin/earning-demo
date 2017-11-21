@@ -1,9 +1,8 @@
 ﻿namespace Earning.Demo.Shared
 {
-    public interface IConfigurationService
+    public interface IConfigurationProvider
     {
         string NodeId { get; set; }
-        string ServiceId { get; set; }
         string ApiRedisKey { get; set; }
         string WorkerRedisKey { get; set; }
         string WebRedisKey { get; set; }
@@ -24,5 +23,6 @@
         string PackageFileName { get; set; }
         string ApiHostPort { get; set; }
         string WebHostPort { get; set; }
+        string RedisServer { get; set; }
     }
 }

@@ -12,6 +12,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "Fabric_NodeName": "SergeyNodeWeb",
+        "Fabric_ApplicationId": "111111111WEB",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
@@ -19,6 +21,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
+        "Fabric_NodeName": "SergeyNodeWeb",
+        "Fabric_ApplicationId": "111111111WEB",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:50242/"

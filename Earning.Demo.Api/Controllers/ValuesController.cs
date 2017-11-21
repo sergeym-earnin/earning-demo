@@ -12,15 +12,11 @@ namespace Earning.Demo.Api.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IDictionary<string, string> Get()
+        public IList<object> Get()
         {
             using (StorageService storage = new StorageService())
             {
-                return new Dictionary<string, string>
-                {
-                    { storage.Configuration.ApiRedisKey, storage.Get(storage.Configuration.ApiRedisKey) },
-                    { storage.Configuration.WorkerRedisKey, storage.Get(storage.Configuration.WorkerRedisKey) }
-                };
+                return storage.GetAll();
             }
         }
 

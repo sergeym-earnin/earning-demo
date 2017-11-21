@@ -26,6 +26,24 @@ body {
     margin: 15px;
 }
 
+li.app {
+    border: 1px solid;
+    padding: 10px;
+    background: #ecfbf6;
+    list-style: none;
+    box-sizing: border-box;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.app-type {
+    border: 1px solid;
+    padding: 10px;
+    background: whitesmoke;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

@@ -8,16 +8,18 @@ namespace Earning.Demo
 {
     class Program
     {
-        static IConfigurationService Configuration = new ConfigurationService();
-
+        static IConfigurationProvider Configuration = new ConfigurationProvider();
         static ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
+
+        static string _redisKey;
 
         static void Main(string[] args)
         {
             Console.WriteLine("[WORKER STARTED]");
             Console.WriteLine($"MachineName: {Environment.MachineName}");
 
-            FabricService.LogVariables(Configuration.WorkerRedisKey);
+            _redisKey = $"{EnviromentService.GetKey(Configuration.WorkerRedisKey)}~Data";
+            EnviromentService.LogVariables(Configuration.WorkerRedisKey);
 
             Timer timer = new Timer(10000);
             timer.Elapsed += (sender, e) => HandleTimer();
@@ -32,23 +34,12 @@ namespace Earning.Demo
 
         private static void HandleTimer()
         {
-            var value = Get();
+            var db = Connection.GetDatabase();
+            var value = db.StringGet(_redisKey);
+
             Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
 
-            Increment();
-        }
-
-        private static void Increment()
-        {
-            var db = Connection.GetDatabase();
-            var value = db.StringGet($"{Configuration.WorkerRedisKey}_Data");
-            db.StringSet($"{Configuration.WorkerRedisKey}_Data", string.IsNullOrEmpty(value) ? 0 : int.Parse(value) + 1);
-        }
-
-        private static string Get()
-        {
-            var db = Connection.GetDatabase();
-            return db.StringGet($"{Configuration.WorkerRedisKey}_Data");
+            db.StringIncrement(_redisKey, 1);
         }
     }
 }

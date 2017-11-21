@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Earning.Demo": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Key": "Value",
+        "Fabric_NodeName": "SergeyNodeWorker",
+        "Fabric_ApplicationId": "33333333Worker"
+      }
+    }
+  }
+}

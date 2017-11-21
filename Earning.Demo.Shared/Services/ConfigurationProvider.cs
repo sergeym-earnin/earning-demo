@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Earning.Demo.Shared
 {
-    public class ConfigurationService: IConfigurationService
+    public class ConfigurationProvider: IConfigurationProvider
     {
         public string NodeId { get; set; }
-        public string ServiceId { get; set; }
         public string ApiRedisKey { get; set; }
         public string WorkerRedisKey { get; set; }
         public string WebRedisKey { get; set; }
@@ -27,11 +25,11 @@ namespace Earning.Demo.Shared
         public string PackageFileName { get; set; }
         public string ApiHostPort { get; set; }
         public string WebHostPort { get; set; }
+        public string RedisServer { get; set; }
 
-        public ConfigurationService()
+        public ConfigurationProvider()
         {
-            NodeId = Environment.GetEnvironmentVariable("AZ_BATCH_NODE_ID");
-            ServiceId = Environment.GetEnvironmentVariable("AZ_BATCH_JOB_ID");
+            NodeId = Environment.GetEnvironmentVariable("Fabric_NodeId");
             ApplicationHostId = Environment.GetEnvironmentVariable("Fabric_ApplicationHostId");
             ApplicationHostType = Environment.GetEnvironmentVariable("Fabric_ApplicationHostType");
             ApplicationId = Environment.GetEnvironmentVariable("Fabric_ApplicationId");
@@ -49,10 +47,12 @@ namespace Earning.Demo.Shared
             ApiRedisKey = "API_KEY";
             WorkerRedisKey = "WORKER_KEY";
             WebRedisKey = "WEB_KEY";
+
             ApiHostPort = "8080";
             WebHostPort = "80";
             ApiUrl = "http://localhost:8080";
-            RedisConnectionString = "earnindemo.redis.cache.windows.net:6380,password=aGxKWzVUlpzQLyvDOP8cXYC3MMl99zOsdMU8QtNqNi0=,ssl=True,abortConnect=False";
+            RedisServer = "localhost:6379";
+            RedisConnectionString = $"{RedisServer},abortConnect=false,syncTimeout=3000,allowAdmin=true";
         }
     }
 }
