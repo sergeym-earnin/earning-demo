@@ -1,6 +1,7 @@
 ﻿using Earning.Demo.Shared.Services;
 using StackExchange.Redis;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Earning.Demo
@@ -52,19 +53,27 @@ namespace Earning.Demo
 
             while (db.KeyExists(_busyKey))
             {
-                var fib = FibonacciNumber(30);
+                List<Task> tasks = new List<Task>();
+                for (int ctr = 1; ctr <= 30; ctr++)
+                {
+                    tasks.Add(Task.Factory.StartNew(() => {
+                        var fib = FibonacciNumber(60);
+                        Console.WriteLine($" WORKER BUSY: {fib}");
+                    }));
+                }
+                Task.WaitAll(tasks.ToArray());
             }
 
             DoWork();
         }
 
-        private static int FibonacciNumber(int n)
+        private static decimal FibonacciNumber(decimal n)
         {
-            int a = 0;
-            int b = 1;
-            int tmp;
+            decimal a = 0;
+            decimal b = 1;
+            decimal tmp;
 
-            for (int i = 0; i < n; i++)
+            for (decimal i = 0; i < n; i++)
             {
                 tmp = a;
                 a = b;

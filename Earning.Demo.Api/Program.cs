@@ -16,8 +16,10 @@ namespace Earning.Demo.Api
         }
 
         public static IWebHost BuildWebHost(string[] args) {
-            //TODO remove after testing DO NOT COMMIT!!!!!!!!!!!
-            var port = Configuration.IsAbTesting ? Configuration.AbApiHostPort : Configuration.ApiHostPort;
+            var port = Configuration.ApiHostPort;
+
+            //TODO comment after testing
+            //var port = Configuration.IsAbTesting ? Configuration.AbApiHostPort : Configuration.ApiHostPort;
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseUrls($"http://localhost:{port}")

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace Earning.Demo.Shared.Services
@@ -23,23 +25,29 @@ namespace Earning.Demo.Shared.Services
 
         public ConfigurationService()
         {
-            ApplicationId = Environment.GetEnvironmentVariable("ApplicationId");
-            NodeName = Environment.GetEnvironmentVariable("NodeName");
-            TestingCommand = "abtesting";
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            IConfiguration Configuration = builder.Build();
+
+            ApplicationId = Environment.GetEnvironmentVariable("ApplicationId")?? Configuration["ApplicationId"];
+            NodeName = Environment.GetEnvironmentVariable("NodeName") ?? Configuration["NodeName"];
+            TestingCommand = Configuration["TestingCommand"];
             IsAbTesting = Environment.GetCommandLineArgs().Any(a => a == TestingCommand);
 
-            ApiRedisKey = "API_KEY";
-            WorkerRedisKey = "WORKER_KEY";
-            WebRedisKey = "WEB_KEY";
-            WorkerBusyKey = "WORKER_BUSY";
+            ApiRedisKey = Configuration["ApiRedisKey"];
+            WorkerRedisKey = Configuration["WorkerRedisKey"];
+            WebRedisKey = Configuration["WebRedisKey"];
+            WorkerBusyKey = Configuration["WorkerBusyKey"];
 
-            ApiHostPort = "8080";
-            AbApiHostPort = "8081";
-            WebHostPort = "80";
-            ApiUrl = "http://localhost:8080";
-            AbApiUrl = "http://localhost:8081";
-            RedisServer = "localhost:6379";
-            RedisConnectionString = $"{RedisServer},abortConnect=false,syncTimeout=3000,allowAdmin=true";
+            ApiHostPort = Configuration["ApiHostPort"];
+            AbApiHostPort = Configuration["AbApiHostPort"];
+            WebHostPort = Configuration["WebHostPort"];
+            ApiUrl = Configuration["ApiUrl"];
+            AbApiUrl = Configuration["AbApiUrl"];
+            RedisServer = Configuration["RedisServer"];
+            RedisConnectionString = Configuration["RedisConnectionString"];
         }
     }
 }
