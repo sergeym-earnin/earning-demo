@@ -26,19 +26,16 @@ namespace Earning.Demo.Web.Pages
             _configurationService = configurationService;
         }
 
-        public void OnGet()
+        public void OnGet(bool isAbTesting)
         {
-            isAbTesting = _configurationService.IsAbTesting;
             isWorkersBusy = _apiClient.isWorkersBusy();
             Applications = _apiClient.GetAllApplications(isAbTesting).GroupBy(i => i.ApplicationType);
         }
 
         public IActionResult OnPost()
         {
-            // Re-factor to storage;
-            _configurationService.IsAbTesting = isAbTesting;
             _apiClient.SetBusyFlag(isWorkersBusy);
-            return RedirectToPage("./Index");
+            return RedirectToAction("OnGet", new { isAbTesting = isAbTesting });
         }
     }
 }
