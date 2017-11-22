@@ -1,24 +1,27 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Earning.Demo.Shared;
 using Earning.Demo.Shared.Services;
+using System.Linq;
 
 namespace Earning.Demo.Api
 {
     public class Program
     {
-        static IConfigurationProvider Configuration = new ConfigurationProvider();
+        static IConfigurationService Configuration = new ConfigurationService();
 
         public static void Main(string[] args)
         {
-            EnviromentService.LogVariables(Configuration.ApiRedisKey);
-            BuildWebHost(args).Run();
+            (new EnviromentService(Configuration)).StartTracking(Configuration.ApiRedisKey);
+            BuildWebHost(args.Where(a => a != Configuration.TestingCommand).ToArray()).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) {
+            //TODO remove after testing DO NOT COMMIT!!!!!!!!!!!
+            var port = Configuration.IsAbTesting ? Configuration.AbApiHostPort : Configuration.ApiHostPort;
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls($"http://localhost:{Configuration.ApiHostPort}")
+                .UseUrls($"http://localhost:{port}")
                 .Build();
+        }
     }
 }

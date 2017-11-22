@@ -6,10 +6,10 @@ namespace Earning.Demo.Web
 {
     public class Program
     {
-        static Shared.IConfigurationProvider Configuration = new Shared.ConfigurationProvider();
+        static IConfigurationService Configuration = new ConfigurationService();
         public static void Main(string[] args)
         {
-            EnviromentService.LogVariables(Configuration.WebRedisKey);
+            (new EnviromentService(Configuration)).StartTracking(Configuration.WebRedisKey);
             BuildWebHost(args).Run();
         }
 
@@ -20,7 +20,5 @@ namespace Earning.Demo.Web
                 .UseUrls($"http://localhost:{Configuration.WebHostPort}")
                 .Build();
         }
-
-
     }
 }

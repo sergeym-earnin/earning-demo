@@ -1,47 +1,48 @@
-﻿using Earning.Demo.Shared;
+﻿using Earning.Demo.Shared.Entities;
+using Earning.Demo.Shared.Extensions;
 using Earning.Demo.Shared.Services;
 using StackExchange.Redis;
-using System;
 using System.Collections.Generic;
 
 namespace Earning.Demo.Api.Services
 {
-    internal sealed class StorageService: IDisposable
-    {
-        ConnectionMultiplexer _connection;
-        public IConfigurationProvider Configuration;
-        IList<string> _appTypes;
 
-        public StorageService()
+    internal class StorageService : IStorageService
+    {
+        protected ConnectionMultiplexer _connection;
+        protected IList<string> _appTypes;
+        protected IConfigurationService _configuration;
+
+        public StorageService(IConfigurationService configuration)
         {
-            Configuration = new ConfigurationProvider();
-            _connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
+            _configuration = configuration;
+            _connection = ConnectionMultiplexer.Connect(_configuration.RedisConnectionString);
             _appTypes = new List<string>()
             {
-                Configuration.ApiRedisKey,
-                Configuration.WebRedisKey,
-                Configuration.WorkerRedisKey
+                _configuration.ApiRedisKey,
+                _configuration.WebRedisKey,
+                _configuration.WorkerRedisKey
             };
         }
 
-        public void Increment(string key, int incrementValue)
+        public virtual void Increment(string key, int incrementValue)
         {
             var db = _connection.GetDatabase();
             var value = db.StringIncrement(key, incrementValue);
         }
 
-        public string Get(string key)
+        public virtual string Get(string key)
         {
             var db = _connection.GetDatabase();
             return db.StringGet(key);
         }
 
-        public List<object> GetAll()
+        public virtual List<ApplicationDTO> GetAll()
         {
             var db = _connection.GetDatabase();
-            var server = _connection.GetServer(Configuration.RedisServer);
+            var server = _connection.GetServer(_configuration.RedisServer);
 
-            List<object> result = new List<object>();
+            List<ApplicationDTO> result = new List<ApplicationDTO>();
 
             foreach(var appType in _appTypes)
             {
@@ -53,7 +54,7 @@ namespace Earning.Demo.Api.Services
                     if(parts.Length > 3)
                     {
                         string value = db.StringGet(key);
-                        result.Add(new
+                        result.Add(new ApplicationDTO
                         {
                             ApplicationType = parts[0],
                             NodeName = parts[1],
@@ -64,12 +65,12 @@ namespace Earning.Demo.Api.Services
                     else
                     {
                         HashEntry[] value = db.HashGetAll(key);
-                        result.Add(new
+                        result.Add(new ApplicationDTO
                         {
                             ApplicationType = parts[0],
                             NodeName = parts[1],
                             ApplicationId = parts[2],
-                            Configuration = value.ConvertFromRedis<ConfigurationProvider>()
+                            Configuration = value.ConvertFromRedis<ConfigurationDTO>()
                         });
                     }
                 }
@@ -78,9 +79,28 @@ namespace Earning.Demo.Api.Services
             return result;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _connection.Dispose();
+        }
+
+        public void SetBusyFlag(bool isBusy)
+        {
+            var db = _connection.GetDatabase();
+            if (isBusy)
+            {
+                db.StringSet(_configuration.WorkerBusyKey, "BLA");
+            }
+            else
+            {
+                db.KeyDelete(_configuration.WorkerBusyKey);
+            }
+        }
+
+        public bool GetBusyFlag()
+        {
+            var db = _connection.GetDatabase();
+            return db.KeyExists(_configuration.WorkerBusyKey);
         }
     }
 }

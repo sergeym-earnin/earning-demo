@@ -23,11 +23,11 @@
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "Fabric_NodeName": "SergeyNodeAPI",
-        "Fabric_ApplicationId": "22222222API",
+        "NodeName": "SergeyNodeAPI",
+        "ApplicationId": "harcoded-fake-id",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:50230/"
+      "applicationUrl": "http://localhost:8080/"
     }
   }
 }

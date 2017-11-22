@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Earning.Demo.Shared.Services
+namespace Earning.Demo.Shared.Extensions
 {
     public static class RedisExtension
     {

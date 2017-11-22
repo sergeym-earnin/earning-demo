@@ -4,7 +4,26 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="row" id="Content" data-url="@Model.Configuration.ApiUrl">
+<div class="row">
+    <div class="col-md-3 command-type">
+        <form method="post" class="form-horizontal">
+            <div class="form-group">
+                <label asp-for="@Model.isAbTesting" class="col-md-2 control-label">AB Testing mode</label>
+                <div class="col-md-10">
+                    <input asp-for="@Model.isAbTesting" class="form-control" />
+                </div>
+                <label asp-for="@Model.isWorkersBusy" class="col-md-2 control-label">Workers busy</label>
+                <div class="col-md-10">
+                    <input asp-for="@Model.isWorkersBusy" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
     @foreach (var application in Model.Applications)
     {
         <div class="col-md-3 app-type">

@@ -1,29 +1,31 @@
-﻿using Earning.Demo.Shared;
-using Earning.Demo.Shared.Services;
+﻿using Earning.Demo.Shared.Services;
 using StackExchange.Redis;
 using System;
-using System.Timers;
+using System.Threading.Tasks;
 
 namespace Earning.Demo
 {
     class Program
     {
-        static IConfigurationProvider Configuration = new ConfigurationProvider();
+        static IConfigurationService Configuration = new ConfigurationService();
         static ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
 
         static string _redisKey;
+        static string _busyKey;
+
+        static Task nextTask;
 
         static void Main(string[] args)
         {
             Console.WriteLine("[WORKER STARTED]");
-            Console.WriteLine($"MachineName: {Environment.MachineName}");
 
-            _redisKey = $"{EnviromentService.GetKey(Configuration.WorkerRedisKey)}~Data";
-            EnviromentService.LogVariables(Configuration.WorkerRedisKey);
+            var enviroment = new EnviromentService(Configuration);
+            enviroment.StartTracking(Configuration.WorkerRedisKey);
 
-            Timer timer = new Timer(10000);
-            timer.Elapsed += (sender, e) => HandleTimer();
-            timer.Start();
+            _redisKey = $"{enviroment.GetKey(Configuration.WorkerRedisKey)}~Data";
+            _busyKey = Configuration.WorkerBusyKey;
+
+            DoWork();
 
             Console.Write("Press any key to exit... ");
             Console.ReadKey();
@@ -32,14 +34,44 @@ namespace Earning.Demo
             Console.WriteLine("[WORKER STOPED]");
         }
 
-        private static void HandleTimer()
+        private static void DoWork()
         {
             var db = Connection.GetDatabase();
             var value = db.StringGet(_redisKey);
 
-            Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
+            if(!db.KeyExists(_busyKey))
+            {
+                Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
+                db.StringIncrement(_redisKey, 1);
+                nextTask = Task.Delay((int)(new TimeSpan(0, 1, 0).TotalMilliseconds))
+                    .ContinueWith(t => DoWork());
+                return;
+            }
 
-            db.StringIncrement(_redisKey, 1);
+            Console.WriteLine("[WORKER BUSY]");
+
+            while (db.KeyExists(_busyKey))
+            {
+                var fib = FibonacciNumber(30);
+            }
+
+            DoWork();
+        }
+
+        private static int FibonacciNumber(int n)
+        {
+            int a = 0;
+            int b = 1;
+            int tmp;
+
+            for (int i = 0; i < n; i++)
+            {
+                tmp = a;
+                a = b;
+                b += tmp;
+            }
+
+            return a;
         }
     }
 }

@@ -1,25 +1,40 @@
-﻿using StackExchange.Redis;
+﻿using Earning.Demo.Shared.Extensions;
+using StackExchange.Redis;
 
 namespace Earning.Demo.Shared.Services
 {
-    public class EnviromentService
+    public sealed class EnviromentService: IEnviromentService
     {
-        public static IConfigurationProvider Configuration = new ConfigurationProvider();
+        public IConfigurationService _configuration { get; set; }
 
-        public static void LogVariables(string applicationKey)
+        public EnviromentService(IConfigurationService configuration)
         {
-            ConnectionMultiplexer _connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
-
-            var db = _connection.GetDatabase();
-
-            var prefix = $"{applicationKey}~{Configuration.NodeName}~{Configuration.ApplicationId}";
-
-            db.HashSet(prefix, Configuration.ToHashEntries());
+            _configuration = configuration;
         }
 
-        public static string GetKey(string applicationKey)
+        public void StartTracking(string applicationKey)
         {
-            return $"{applicationKey}~{Configuration.NodeName}~{Configuration.ApplicationId}";
+            HandleTimer(applicationKey);
+
+            System.Timers.Timer timer = new System.Timers.Timer(new System.TimeSpan(0, 1, 0).TotalMilliseconds);
+            timer.Elapsed += (sender, e) => HandleTimer(applicationKey);
+            timer.Start();
+        }
+
+        public string GetKey(string applicationKey)
+        {
+            return $"{applicationKey}~{_configuration.NodeName}~{_configuration.ApplicationId}";
+        }
+
+        private void HandleTimer(string applicationKey)
+        {
+            using (var connection = ConnectionMultiplexer.Connect(_configuration.RedisConnectionString))
+            {
+                var db = connection.GetDatabase();
+                var prefix = $"{applicationKey}~{_configuration.NodeName}~{_configuration.ApplicationId}";
+                db.HashSet(prefix, _configuration.ToHashEntries());
+                db.KeyExpire(prefix, new System.TimeSpan(0, 2, 0));
+            }
         }
     }
 }
