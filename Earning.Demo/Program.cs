@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Earning.Demo
@@ -28,11 +29,16 @@ namespace Earning.Demo
 
             DoWork();
 
-            Console.Write("Press any key to exit... ");
-            Console.ReadKey();
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
 
-            Connection.Dispose();
-            Console.WriteLine("[WORKER STOPED]");
+            //Console.Write("Press any key to exit... ");
+            //Console.ReadKey();
+
+            //Connection.Dispose();
+            //Console.WriteLine("[WORKER STOPED]");
         }
 
         private static void DoWork()
@@ -44,7 +50,7 @@ namespace Earning.Demo
             {
                 Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
                 db.StringIncrement(_redisKey, 1);
-                nextTask = Task.Delay((int)(new TimeSpan(0, 1, 0).TotalMilliseconds))
+                nextTask = Task.Delay((int)(new TimeSpan(0, 0, 10).TotalMilliseconds))
                     .ContinueWith(t => DoWork());
                 return;
             }

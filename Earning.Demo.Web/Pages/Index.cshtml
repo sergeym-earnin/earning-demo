@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-md-3 command-type">
+    <div class="col-md-12 command-type">
         <form method="post" class="form-horizontal">
             <div class="form-group">
                 <label asp-for="@Model.isAbTesting" class="col-md-2 control-label">AB Testing mode</label>
@@ -24,9 +24,11 @@
             </div>
         </form>
     </div>
+</div>
+<div class="row">
     @foreach (var application in Model.Applications)
     {
-        <div class="col-md-3 app-type">
+        <div class="col-md-12 app-type">
             <h1>@application.Key</h1>
             <ul>
                 @foreach (var item in application)

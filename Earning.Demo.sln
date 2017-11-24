@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{6DF793BD-3154-48A8-9894-1235363CB3F3}"
 	ProjectSection(SolutionItems) = preProject
 		docker-clear.bat = docker-clear.bat
+		dotnet-publish.bat = dotnet-publish.bat
 	EndProjectSection
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DemoApplication", "DemoApplication\DemoApplication.sfproj", "{333A98C8-BFBF-4CFC-BF8D-6872D5AC8E85}"
