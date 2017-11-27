@@ -15,7 +15,6 @@
         string TestingCommand { get; set; }
         bool IsAbTesting { get; set; }
         string WorkerBusyKey { get; set; }
-        string AbApiHostPort { get; set; }
         string AbApiUrl { get; set; }
     }
 }

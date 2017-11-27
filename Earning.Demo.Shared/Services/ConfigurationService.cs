@@ -16,7 +16,6 @@ namespace Earning.Demo.Shared.Services
         public string ApplicationId { get; set; }
         public string NodeName { get; set; }
         public string ApiHostPort { get; set; }
-        public string AbApiHostPort { get; set; }
         public string WebHostPort { get; set; }
         public string RedisServer { get; set; }
         public bool IsAbTesting { get; set; }
@@ -42,7 +41,6 @@ namespace Earning.Demo.Shared.Services
             WorkerBusyKey = Configuration["WorkerBusyKey"];
 
             ApiHostPort = Configuration["ApiHostPort"];
-            AbApiHostPort = Configuration["AbApiHostPort"];
             WebHostPort = Configuration["WebHostPort"];
             ApiUrl = Configuration["ApiUrl"];
             AbApiUrl = Configuration["AbApiUrl"];

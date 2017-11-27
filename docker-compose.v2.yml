@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  earning.demo.api.v2:
+    image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo.api
+    build:
+      context: ./Earning.Demo.Api
+      dockerfile: DockerfileV2
+    ports:
+      - "8080:8080"
+
+#  earning.demo.web:
+#    image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo.web
+#    build:
+#      context: ./Earning.Demo.Web
+#      dockerfile: DockerfileV2
+#    ports:
+#      - "80:80"
+#
+#  earning.demo:
+#    image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo
+#    build:
+#      context: ./Earning.Demo
+#      dockerfile: DockerfileV2

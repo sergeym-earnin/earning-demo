@@ -17,7 +17,6 @@ namespace Earning.Demo.Shared.Entities
         public bool IsAbTesting { get; set; }
         public string TestingCommand { get; set; }
         public string WorkerBusyKey { get; set; }
-        public string AbApiHostPort { get; set; }
         public string AbApiUrl { get; set; }
     }
 }

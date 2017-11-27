@@ -4,4 +4,4 @@ EXPOSE 8080
 COPY ./published .
 #ENV ASPNETCORE_URLS=http://+:8080
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENTRYPOINT ["dotnet", "Earning.Demo.Api.dll"]
+ENTRYPOINT ["dotnet", "Earning.Demo.Api.dll", "abtesting"]

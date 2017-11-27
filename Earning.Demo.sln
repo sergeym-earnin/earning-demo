@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Earning.Demo", "Earning.Demo\Earning.Demo.csproj", "{44DB85AF-228F-4166-8106-054683170E59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo", "Earning.Demo\Earning.Demo.csproj", "{44DB85AF-228F-4166-8106-054683170E59}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Earning.Demo.Api", "Earning.Demo.Api\Earning.Demo.Api.csproj", "{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Api", "Earning.Demo.Api\Earning.Demo.Api.csproj", "{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{09C509E1-EC4F-438A-8FA3-C4838E16F512}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Earning.Demo.Web", "Earning.Demo.Web\Earning.Demo.Web.csproj", "{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Web", "Earning.Demo.Web\Earning.Demo.Web.csproj", "{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{6DF793BD-3154-48A8-9894-1235363CB3F3}"
 	ProjectSection(SolutionItems) = preProject
 		docker-clear.bat = docker-clear.bat
 		dotnet-publish.bat = dotnet-publish.bat
+		dotnet-publish.sh = dotnet-publish.sh
+		docker-publish.sh = docker-publish.sh
 	EndProjectSection
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "DemoApplication", "DemoApplication\DemoApplication.sfproj", "{333A98C8-BFBF-4CFC-BF8D-6872D5AC8E85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Earning.Demo.Shared", "Earning.Demo.Shared\Earning.Demo.Shared.csproj", "{179DE22C-DC55-4946-90F8-B9EC284F3CB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Shared", "Earning.Demo.Shared\Earning.Demo.Shared.csproj", "{179DE22C-DC55-4946-90F8-B9EC284F3CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
