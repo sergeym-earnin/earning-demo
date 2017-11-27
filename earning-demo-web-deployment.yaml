@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.5.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: earning-demo-web
+  name: earning-demo-web
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: earning-demo-web
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_URLS
+          value: http://+:80
+        image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo.web
+        name: earning-demo-web
+        ports:
+        - containerPort: 80
+        resources: {}
+      imagePullSecrets:
+      - name: earning-dh-secret
+      restartPolicy: Always
+status: {}
