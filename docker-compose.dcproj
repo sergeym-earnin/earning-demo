@@ -9,7 +9,9 @@
     <DockerServiceName>earning.demo.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose.v2.yml" />
     <None Include="docker-compose.yml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="docker-publish.sh" />
   </ItemGroup>
 </Project>

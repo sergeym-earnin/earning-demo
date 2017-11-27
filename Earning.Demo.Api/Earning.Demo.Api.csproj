@@ -10,9 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="run-ab.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="run.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
