@@ -20,7 +20,7 @@ namespace Earning.Demo.Api
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls($"http://+:{port}")
+                //.UseUrls($"http://+:{port}")
                 .Build();
         }
     }
