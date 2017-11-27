@@ -14,6 +14,7 @@ spec:
   - name: "80"
     port: 80
     targetPort: 80
+    nodePort: 32432
   selector:
     io.kompose.service: earning-demo-web
 status:
