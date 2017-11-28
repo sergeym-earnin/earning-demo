@@ -1,0 +1,6 @@
+.terraform
+*.pyc
+__pycache__
+*.plan
+kubernetes-*/
+keys/
