@@ -1,6 +1,0 @@
-{
-    "availability_zones": "us-west-1a,us-west-1c",
-    "cluster_name": "cluster1",
-    "domain_name": "haha.info",
-    "region": "us-west-1"
-}
