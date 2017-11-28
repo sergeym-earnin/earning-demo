@@ -65,4 +65,4 @@ docker-compose build
 docker login -u $docker_user -p $docker_password
 docker push $docker_repo
 
-docker-compose up
+# docker-compose up

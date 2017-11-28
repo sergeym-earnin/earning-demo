@@ -16,11 +16,8 @@ namespace Earning.Demo.Api
         }
 
         public static IWebHost BuildWebHost(string[] args) {
-            var port = Configuration.ApiHostPort;
-
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                //.UseUrls($"http://+:{port}")
                 .Build();
         }
     }

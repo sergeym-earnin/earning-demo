@@ -9,6 +9,7 @@ using System.Text;
 
 namespace Earning.Demo.Shared.Common
 {
+    // TODO: implement fall back behavior
     internal sealed class ApiClient: IApiClient
     {
         IConfigurationService _configuration;

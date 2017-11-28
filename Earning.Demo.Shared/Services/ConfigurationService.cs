@@ -15,8 +15,7 @@ namespace Earning.Demo.Shared.Services
         public string RedisConnectionString { get; set; }
         public string ApplicationId { get; set; }
         public string NodeName { get; set; }
-        public string ApiHostPort { get; set; }
-        public string WebHostPort { get; set; }
+
         public string RedisServer { get; set; }
         public bool IsAbTesting { get; set; }
         public string TestingCommand { get; set; }
@@ -30,8 +29,8 @@ namespace Earning.Demo.Shared.Services
 
             IConfiguration Configuration = builder.Build();
 
-            ApplicationId = Environment.GetEnvironmentVariable("ApplicationId")?? Configuration["ApplicationId"];
-            NodeName = Environment.GetEnvironmentVariable("NodeName") ?? Configuration["NodeName"];
+            ApplicationId = Environment.GetEnvironmentVariable("HOSTNAME")?? Configuration["ApplicationId"];
+            NodeName = Environment.GetEnvironmentVariable("NODE_NAME") ?? Configuration["NodeName"];
             TestingCommand = Configuration["TestingCommand"];
             IsAbTesting = Environment.GetCommandLineArgs().Any(a => a == TestingCommand);
 
@@ -40,8 +39,6 @@ namespace Earning.Demo.Shared.Services
             WebRedisKey = Configuration["WebRedisKey"];
             WorkerBusyKey = Configuration["WorkerBusyKey"];
 
-            ApiHostPort = Configuration["ApiHostPort"];
-            WebHostPort = Configuration["WebHostPort"];
             ApiUrl = Configuration["ApiUrl"];
             AbApiUrl = Configuration["AbApiUrl"];
             RedisServer = Configuration["RedisServer"];

@@ -9,8 +9,6 @@
         string RedisConnectionString { get; set; }
         string ApplicationId { get; set; }
         string NodeName { get; set; }
-        string ApiHostPort { get; set; }
-        string WebHostPort { get; set; }
         string RedisServer { get; set; }
         string TestingCommand { get; set; }
         bool IsAbTesting { get; set; }

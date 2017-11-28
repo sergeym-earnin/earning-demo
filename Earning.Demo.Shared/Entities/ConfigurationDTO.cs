@@ -11,8 +11,6 @@ namespace Earning.Demo.Shared.Entities
         public string RedisConnectionString { get; set; }
         public string ApplicationId { get; set; }
         public string NodeName { get; set; }
-        public string ApiHostPort { get; set; }
-        public string WebHostPort { get; set; }
         public string RedisServer { get; set; }
         public bool IsAbTesting { get; set; }
         public string TestingCommand { get; set; }

@@ -1,5 +1,4 @@
-﻿using Earning.Demo.Shared.Services;
-using System;
+﻿using System;
 
 namespace Earning.Demo.Shared.Entities
 {

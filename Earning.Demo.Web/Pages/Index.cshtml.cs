@@ -11,31 +11,36 @@ namespace Earning.Demo.Web.Pages
     public class IndexModel : PageModel
     {
         IApiClient _apiClient;
-        IConfigurationService _configurationService;
 
+        public IConfigurationService Confuguration;
         public IEnumerable<IGrouping<string, ApplicationDTO>> Applications;
+        public string Counter;
 
         [BindProperty]
         public bool isAbTesting { get; set; }
         [BindProperty]
         public bool isWorkersBusy { get; set; }
 
-        public IndexModel(IApiClient apiClient, IConfigurationService configurationService)
+        public IndexModel(IApiClient apiClient, IConfigurationService configuration)
         {
             _apiClient = apiClient;
-            _configurationService = configurationService;
+            Confuguration = configuration;
         }
 
         public void OnGet(bool isAbTesting)
         {
             isWorkersBusy = _apiClient.isWorkersBusy();
-            Applications = _apiClient.GetAllApplications(isAbTesting).GroupBy(i => i.ApplicationType);
+            var applications = _apiClient.GetAllApplications(isAbTesting);
+            Applications = applications
+                .Where(i => !string.IsNullOrEmpty(i.NodeName))
+                .GroupBy(i => i.NodeName);
+            Counter = applications.FirstOrDefault(i => string.IsNullOrEmpty(i.NodeName))?.Data;
         }
 
         public IActionResult OnPost()
         {
             _apiClient.SetBusyFlag(isWorkersBusy);
-            return RedirectToAction("OnGet", new { isAbTesting = isAbTesting });
+            return RedirectToAction("OnGet", new { isAbTesting });
         }
     }
 }

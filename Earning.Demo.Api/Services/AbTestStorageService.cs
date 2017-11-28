@@ -15,13 +15,15 @@ namespace Earning.Demo.Api.Services
 
         public override List<ApplicationDTO> GetAll()
         {
-            var results = base.GetAll();
-            results = results.Select(i =>
-            {
-                i.ApplicationType += "-AB-Testing";
-                return i;
-            }).ToList();
-            return results;
+            return base.GetAll()
+              .Select(i =>
+              {
+                  if (i.ApplicationId == _configuration.ApplicationId)
+                  {
+                      i.ApplicationType += "-AB-Testing";
+                  }
+                  return i;
+              }).ToList();
         }
     }
 }

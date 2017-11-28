@@ -21,9 +21,9 @@ namespace Earning.Demo.Shared.Services
             timer.Start();
         }
 
-        public string GetKey(string applicationKey)
+        public string GetDataKey(string applicationKey)
         {
-            return $"{applicationKey}~{_configuration.NodeName}~{_configuration.ApplicationId}";
+            return "Data";//$"{_configuration.NodeName}~{applicationKey}~{_configuration.ApplicationId}";
         }
 
         private void HandleTimer(string applicationKey)
@@ -31,7 +31,7 @@ namespace Earning.Demo.Shared.Services
             using (var connection = ConnectionMultiplexer.Connect(_configuration.RedisConnectionString))
             {
                 var db = connection.GetDatabase();
-                var prefix = $"{applicationKey}~{_configuration.NodeName}~{_configuration.ApplicationId}";
+                var prefix = $"{_configuration.NodeName}~{applicationKey}~{_configuration.ApplicationId}";
                 db.HashSet(prefix, _configuration.ToHashEntries());
                 db.KeyExpire(prefix, new System.TimeSpan(0, 2, 0));
             }

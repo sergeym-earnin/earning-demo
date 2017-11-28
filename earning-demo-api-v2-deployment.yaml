@@ -19,13 +19,18 @@ spec:
     spec:
       containers:
       - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: ASPNETCORE_URLS
           value: http://+:80
-        image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo.api
         name: earning-demo-api-v2
+        image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo.api
         resources: {}
+        imagePullPolicy: Always
       imagePullSecrets:
       - name: earning-dh-secret
       restartPolicy: Always

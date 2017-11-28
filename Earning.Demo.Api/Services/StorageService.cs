@@ -7,22 +7,15 @@ using System.Collections.Generic;
 namespace Earning.Demo.Api.Services
 {
 
-    internal class StorageService : IStorageService
+    class StorageService : IStorageService
     {
         protected ConnectionMultiplexer _connection;
-        protected IList<string> _appTypes;
         protected IConfigurationService _configuration;
 
         public StorageService(IConfigurationService configuration)
         {
             _configuration = configuration;
             _connection = ConnectionMultiplexer.Connect(_configuration.RedisConnectionString);
-            _appTypes = new List<string>()
-            {
-                _configuration.ApiRedisKey,
-                _configuration.WebRedisKey,
-                _configuration.WorkerRedisKey
-            };
         }
 
         public virtual void Increment(string key, int incrementValue)
@@ -44,35 +37,33 @@ namespace Earning.Demo.Api.Services
 
             List<ApplicationDTO> result = new List<ApplicationDTO>();
 
-            foreach(var appType in _appTypes)
-            {
-                var keys = server.Keys(pattern: $"{appType}*");
 
-                foreach (var key in keys)
+            var keys = server.Keys(pattern: $"*");
+
+            foreach (var key in keys)
+            {
+                var parts = key.ToString().Split('~');
+                if(parts.Length == 1)
                 {
-                    var parts = key.ToString().Split('~');
-                    if(parts.Length > 3)
+                    string value = db.StringGet(key);
+                    result.Add(new ApplicationDTO
                     {
-                        string value = db.StringGet(key);
-                        result.Add(new ApplicationDTO
-                        {
-                            ApplicationType = parts[0],
-                            NodeName = parts[1],
-                            ApplicationId = parts[2],
-                            Data = value
-                        });
-                    }
-                    else
+                        ApplicationType = null,
+                        NodeName = null,
+                        ApplicationId = null,
+                        Data = value
+                    });
+                }
+                else
+                {
+                    HashEntry[] value = db.HashGetAll(key);
+                    result.Add(new ApplicationDTO
                     {
-                        HashEntry[] value = db.HashGetAll(key);
-                        result.Add(new ApplicationDTO
-                        {
-                            ApplicationType = parts[0],
-                            NodeName = parts[1],
-                            ApplicationId = parts[2],
-                            Configuration = value.ConvertFromRedis<ConfigurationDTO>()
-                        });
-                    }
+                        ApplicationType = parts[1].Replace("_KEY", string.Empty),
+                        NodeName = parts[0],
+                        ApplicationId = parts[2],
+                        Configuration = value.ConvertFromRedis<ConfigurationDTO>()
+                    });
                 }
             }
 

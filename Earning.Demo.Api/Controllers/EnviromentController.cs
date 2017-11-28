@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Earning.Demo.Api.Services;
 using Earning.Demo.Shared.Services;
 using Earning.Demo.Shared.Entities;
+using System.Linq;
 
 namespace Earning.Demo.Api.Controllers
 {
@@ -22,6 +23,14 @@ namespace Earning.Demo.Api.Controllers
         public IList<ApplicationDTO> Get()
         {
             return _storageService.GetAll();
+        }
+
+        [HttpGet]
+        [Route("GetData")]
+        public ApplicationDTO GetData()
+        {
+            return _storageService.GetAll()
+              .FirstOrDefault( i => string.IsNullOrEmpty(i.NodeName));
         }
 
         [HttpPost]

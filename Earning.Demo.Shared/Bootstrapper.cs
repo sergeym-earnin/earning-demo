@@ -8,9 +8,9 @@ namespace Earning.Demo.Shared
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IConfigurationService, ConfigurationService>();
-            services.AddSingleton<IEnviromentService, EnviromentService>();
-            services.AddSingleton<IApiClient, ApiClient>();
+            services.AddTransient<IConfigurationService, ConfigurationService>();
+            services.AddTransient<IEnviromentService, EnviromentService>();
+            services.AddScoped<IApiClient, ApiClient>();
         }
     }
 }

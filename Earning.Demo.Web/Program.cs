@@ -17,7 +17,6 @@ namespace Earning.Demo.Web
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                //.UseUrls($"http://+:{Configuration.WebHostPort}")
                 .Build();
         }
     }

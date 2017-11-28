@@ -3,6 +3,6 @@
     public interface IEnviromentService
     {
         void StartTracking(string applicationKey);
-        string GetKey(string applicationKey);
+        string GetDataKey(string applicationKey);
     }
 }

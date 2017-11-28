@@ -18,9 +18,15 @@ spec:
         io.kompose.service: earning-demo
     spec:
       containers:
-      - image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
         name: earning-demo
+        image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo
         resources: {}
+        imagePullPolicy: Always
       imagePullSecrets:
       - name: earning-dh-secret
       restartPolicy: Always

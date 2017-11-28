@@ -24,7 +24,7 @@ namespace Earning.Demo
             var enviroment = new EnviromentService(Configuration);
             enviroment.StartTracking(Configuration.WorkerRedisKey);
 
-            _redisKey = $"{enviroment.GetKey(Configuration.WorkerRedisKey)}~Data";
+            _redisKey = $"{enviroment.GetDataKey(Configuration.WorkerRedisKey)}";
             _busyKey = Configuration.WorkerBusyKey;
 
             DoWork();
@@ -33,12 +33,6 @@ namespace Earning.Demo
             {
                 Thread.Sleep(1000);
             }
-
-            //Console.Write("Press any key to exit... ");
-            //Console.ReadKey();
-
-            //Connection.Dispose();
-            //Console.WriteLine("[WORKER STOPED]");
         }
 
         private static void DoWork()

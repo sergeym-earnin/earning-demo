@@ -26,20 +26,22 @@
     </div>
 </div>
 <div class="row">
+	<div class="col-md-12 app-counter">
+	    @if (@Model.Counter != null)
+        {
+            <h1 id="content" data-url="@Model.Confuguration.ApiUrl">Data: @Model.Counter</h1>
+        }
+	</div>
     @foreach (var application in Model.Applications)
     {
         <div class="col-md-12 app-type">
-            <h1>@application.Key</h1>
+            <h1>Node Name: @application.Key</h1>
             <ul>
                 @foreach (var item in application)
                 {
                     <li class="app">
-                        <h3>Application: @item.ApplicationId</h3>
-                        <h3>Node: @item.NodeName</h3>
-                        @if (item.Data != null)
-                        {
-                            <h3>Data: @item.Data</h3>
-                        }
+                        <h3>Application Id: @item.ApplicationId</h3>
+                        <h3>Application Type: @item.ApplicationType</h3>
                     </li>
                 }
             </ul>
