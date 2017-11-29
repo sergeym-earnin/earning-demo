@@ -27,10 +27,10 @@ namespace Earning.Demo.Api.Controllers
 
         [HttpGet]
         [Route("GetData")]
-        public ApplicationDTO GetData()
+        public string GetData()
         {
             return _storageService.GetAll()
-              .FirstOrDefault( i => string.IsNullOrEmpty(i.NodeName));
+              .FirstOrDefault( i => string.IsNullOrEmpty(i.NodeName))?.Data;
         }
 
         [HttpPost]

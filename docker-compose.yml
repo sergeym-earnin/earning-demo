@@ -7,17 +7,18 @@ services:
       context: ./Earning.Demo.Api
       dockerfile: Dockerfile
     environment:
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://*:80
       - ASPNETCORE_ENVIRONMENT=Development
 
-  earning-demo-api-v2:
+  earning-demo-api-ab:
     image: msorokovsky/dotnetcore-demoapp:2.0.0-earning.demo.api
     build:
       context: ./Earning.Demo.Api
-      dockerfile: DockerfileV2
+      dockerfile: Dockerfile
     environment:
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://*:80
       - ASPNETCORE_ENVIRONMENT=Development
+      - DEMO_AB=TRUE
 
   earning-demo-web:
     image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo.web
@@ -27,7 +28,7 @@ services:
     ports:
       - "80:80"
     environment:
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://*:80
       - ASPNETCORE_ENVIRONMENT=Development
 
   earning-demo:

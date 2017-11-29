@@ -80,7 +80,7 @@ namespace Earning.Demo.Api.Services
             var db = _connection.GetDatabase();
             if (isBusy)
             {
-                db.StringSet(_configuration.WorkerBusyKey, "BLA");
+                db.StringSet(_configuration.WorkerBusyKey, "BUSY");
             }
             else
             {

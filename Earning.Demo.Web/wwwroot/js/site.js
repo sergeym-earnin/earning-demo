@@ -3,14 +3,14 @@
         var content = ('#content');
         $.ajax({
             type: 'GET',
-            url: $(content).data('url') + '/api/application/getdata',
+            url: $(content).data('url'),
             dataType: "json",
             async: false,
-            success: function (data) {
-                if (data != null)
+            success: function (payload) {
+                if (payload != null)
                 {
                   $(content).empty();
-                  $(content).append('Data: ' + data);
+                  $(content).append('Data: ' + payload);
                 }
             }
         }).always(function() {

@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.5.0 ()
   creationTimestamp: null
   labels:
-    io.kompose.service: earning-demo-api-v2
-  name: earning-demo-api-v2
+    io.kompose.service: earning-demo-api-ab
+  name: earning-demo-api-ab
 spec:
   clusterIP: None
   ports:
@@ -15,6 +15,6 @@ spec:
     port: 55555
     targetPort: 0
   selector:
-    io.kompose.service: earning-demo-api-v2
+    io.kompose.service: earning-demo-api-ab
 status:
   loadBalancer: {}

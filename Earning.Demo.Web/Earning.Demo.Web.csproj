@@ -2,6 +2,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <StartAction>Project</StartAction>
+    <EnvironmentVariables>
+      <Variable name="ASPNETCORE_ENVIRONMENT" value="Development" />
+      <Variable name="ASPNETCORE_URLS" value="http://localhost:8081" />
+      <Variable name="DEMO_ENVIRONMENT" value="LocalDevelopment" />
+      <Variable name="NODE_NAME" value="VSNode" />
+      <Variable name="HOSTNAME" value="web-harcoded-fake-id" />
+    </EnvironmentVariables>
+    <ApplicationURL>http://localhost:8081</ApplicationURL>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="run.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -16,5 +27,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Earning.Demo.Shared\Earning.Demo.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>

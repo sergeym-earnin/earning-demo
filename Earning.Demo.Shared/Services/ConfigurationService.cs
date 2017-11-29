@@ -23,16 +23,19 @@ namespace Earning.Demo.Shared.Services
 
         public ConfigurationService()
         {
+            var enviroment = Environment.GetEnvironmentVariable("DEMO_ENVIRONMENT");
+            enviroment = string.IsNullOrEmpty(enviroment) ? string.Empty: $".{enviroment}";
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
+                .AddJsonFile($"appsettings{enviroment}.json");
 
             IConfiguration Configuration = builder.Build();
 
             ApplicationId = Environment.GetEnvironmentVariable("HOSTNAME")?? Configuration["ApplicationId"];
             NodeName = Environment.GetEnvironmentVariable("NODE_NAME") ?? Configuration["NodeName"];
             TestingCommand = Configuration["TestingCommand"];
-            IsAbTesting = Environment.GetCommandLineArgs().Any(a => a == TestingCommand);
+            IsAbTesting = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DEMO_AB"));
 
             ApiRedisKey = Configuration["ApiRedisKey"];
             WorkerRedisKey = Configuration["WorkerRedisKey"];

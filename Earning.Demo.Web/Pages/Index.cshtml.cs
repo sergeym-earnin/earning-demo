@@ -12,7 +12,6 @@ namespace Earning.Demo.Web.Pages
     {
         IApiClient _apiClient;
 
-        public IConfigurationService Confuguration;
         public IEnumerable<IGrouping<string, ApplicationDTO>> Applications;
         public string Counter;
 
@@ -21,26 +20,26 @@ namespace Earning.Demo.Web.Pages
         [BindProperty]
         public bool isWorkersBusy { get; set; }
 
-        public IndexModel(IApiClient apiClient, IConfigurationService configuration)
+        public IndexModel(IApiClient apiClient)
         {
             _apiClient = apiClient;
-            Confuguration = configuration;
         }
 
         public void OnGet(bool isAbTesting)
         {
             isWorkersBusy = _apiClient.isWorkersBusy();
-            var applications = _apiClient.GetAllApplications(isAbTesting);
+            var applications = _apiClient.GetAllApplications();
             Applications = applications
                 .Where(i => !string.IsNullOrEmpty(i.NodeName))
                 .GroupBy(i => i.NodeName);
-            Counter = applications.FirstOrDefault(i => string.IsNullOrEmpty(i.NodeName))?.Data;
+            Counter = applications.FirstOrDefault(i => string.IsNullOrEmpty(i.NodeName) &&
+                                                  i.Data != "BLA")?.Data;
         }
 
         public IActionResult OnPost()
         {
             _apiClient.SetBusyFlag(isWorkersBusy);
-            return RedirectToAction("OnGet", new { isAbTesting });
+            return RedirectToPage("/Index", "OnGet", new { isAbTesting = isAbTesting });
         }
     }
 }

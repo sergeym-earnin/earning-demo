@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Earning.Demo.Shared.Services;
-using System.Linq;
 
 namespace Earning.Demo.Api
 {
@@ -12,7 +11,7 @@ namespace Earning.Demo.Api
         public static void Main(string[] args)
         {
             (new EnviromentService(Configuration)).StartTracking(Configuration.ApiRedisKey);
-            BuildWebHost(args.Where(a => a != Configuration.TestingCommand).ToArray()).Run();
+            BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) {

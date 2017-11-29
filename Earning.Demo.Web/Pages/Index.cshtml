@@ -29,7 +29,7 @@
 	<div class="col-md-12 app-counter">
 	    @if (@Model.Counter != null)
         {
-            <h1 id="content" data-url="@Model.Confuguration.ApiUrl">Data: @Model.Counter</h1>
+            <h1 id="content" data-url='@Url.Action("GetData", "Application", null)'>Data: @Model.Counter</h1>
         }
 	</div>
     @foreach (var application in Model.Applications)

@@ -12,8 +12,8 @@
     <None Include="docker-compose.yml" />
     <None Include="earning-demo-api-deployment.yaml" />
     <None Include="earning-demo-api-service.yaml" />
-    <None Include="earning-demo-api-v2-deployment.yaml" />
-    <None Include="earning-demo-api-v2-service.yaml" />
+    <None Include="earning-demo-api-ab-deployment.yaml" />
+    <None Include="earning-demo-api-ab-service.yaml" />
     <None Include="earning-demo-deployment.yaml" />
     <None Include="earning-demo-service.yaml" />
     <None Include="earning-demo-web-deployment.yaml" />
