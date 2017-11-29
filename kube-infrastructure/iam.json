@@ -1,0 +1,39 @@
+[
+    {
+        "Effect": "Allow",
+        "Action": [
+            "route53:ChangeResourceRecordSets"
+        ],
+        "Resource": [
+            "arn:aws:route53:::hostedzone/*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "route53:ListHostedZones",
+            "route53:ListResourceRecordSets"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "dynamodb:*"
+        ],
+        "Resource": [
+            "*"
+        ]
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "es:*"
+        ],
+        "Resource": [
+            "*"
+        ]
+    }
+]
