@@ -15,7 +15,7 @@ DOMAIN_NAME=${5-mikledemo.info}
 
 ./scripts/generate_config.py --region=$REGION --cluster-name=$CLUSTER_NAME --domain-name=$DOMAIN_NAME
 ./scripts/init_terraform.sh
-./script/create_vpc.sh
+./scripts/create_vpc.sh
 
 ./scripts/generate_certificate.sh
 ./scripts/generate_create_cluster_terraform.sh
