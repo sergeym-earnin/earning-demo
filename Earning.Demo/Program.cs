@@ -23,6 +23,27 @@ namespace Earning.Demo
 
         static volatile bool _isWorkerShouldBeBusy = false;
 
+        static object _syncRoot = new object();
+
+        public static bool IsWorkerShouldBeBusy
+        {
+            get
+            {
+                lock (_syncRoot)
+                {
+                    return _isWorkerShouldBeBusy;
+                }
+            }
+            set
+            {
+                lock (_syncRoot)
+                {
+                    _isWorkerShouldBeBusy = value;
+                }
+            }
+        }
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("[WORKER STARTED]");
@@ -49,7 +70,7 @@ namespace Earning.Demo
                 var db = Connection.GetDatabase();
                 while (true)
                 {
-                    _isWorkerShouldBeBusy = db.KeyExists(_busyKey);
+                    IsWorkerShouldBeBusy = db.KeyExists(_busyKey);
                     Thread.Sleep(Second);
                 }
             }, TaskCreationOptions.LongRunning);
@@ -62,7 +83,9 @@ namespace Earning.Demo
             var db = Connection.GetDatabase();
             var value = db.StringGet(_redisKey);
 
-            if (!_isWorkerShouldBeBusy)
+            Console.WriteLine($"IsWorkerBusy: {IsWorkerShouldBeBusy}");
+
+            if (!IsWorkerShouldBeBusy)
             {
                 Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
                 db.StringIncrement(_redisKey, 1);
@@ -75,7 +98,7 @@ namespace Earning.Demo
 
             ulong _counter = 0;
 
-            while (_isWorkerShouldBeBusy)
+            while (IsWorkerShouldBeBusy)
             {
                 _counter++;
                 long fib = 0;
@@ -93,7 +116,7 @@ namespace Earning.Demo
                     }));
                 }
                 Task.WaitAll(tasks.ToArray());
-                Console.WriteLine($" WORKER BUSY: {_counter} result: {fib}  ");
+                Console.WriteLine($" WORKER BUSY: {_counter} result: {fib}. Is Busy: {IsWorkerShouldBeBusy} ");
             }
 
             DoWork();
