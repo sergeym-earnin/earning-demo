@@ -26,4 +26,9 @@
     <ProjectReference Include="..\Earning.Demo.Shared\Earning.Demo.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="run-ab.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

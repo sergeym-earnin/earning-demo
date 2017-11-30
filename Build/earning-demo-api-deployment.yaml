@@ -27,6 +27,8 @@ spec:
           value: Development
         - name: ASPNETCORE_URLS
           value: http://+:80
+        - name: DEMO_AB
+          value: false
         name: earning-demo-api
         image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo.api
         resources: {}

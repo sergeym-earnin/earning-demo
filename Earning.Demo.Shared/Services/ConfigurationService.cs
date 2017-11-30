@@ -35,7 +35,7 @@ namespace Earning.Demo.Shared.Services
             ApplicationId = Environment.GetEnvironmentVariable("HOSTNAME")?? Configuration["ApplicationId"];
             NodeName = Environment.GetEnvironmentVariable("NODE_NAME") ?? Configuration["NodeName"];
             TestingCommand = Configuration["TestingCommand"];
-            IsAbTesting = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DEMO_AB"));
+            IsAbTesting = bool.Parse(Environment.GetEnvironmentVariable("DEMO_AB") ?? "false");
 
             ApiRedisKey = Configuration["ApiRedisKey"];
             WorkerRedisKey = Configuration["WorkerRedisKey"];
