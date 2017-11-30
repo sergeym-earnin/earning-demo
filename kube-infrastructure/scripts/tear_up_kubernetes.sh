@@ -14,7 +14,7 @@ terraform init -backend-config="region=$REGION" \
                -backend-config="bucket=$BUCKET" \
                -backend-config="key=$KEY"
 
-terraforrm plan -out=cluster.plan
+terraform plan -out=cluster.plan
 
 terraform plan -destroy -out=cluster-destroy.plan
 
