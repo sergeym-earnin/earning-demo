@@ -10,4 +10,4 @@ kompose down
 
 kubectl create -f earning-demo-service.yaml,earning-demo-api-service.yaml,earning-demo-api-ab-service.yaml,earning-demo-web-service.yaml,earning-demo-deployment.yaml,earning-demo-api-ab-deployment.yaml,earning-demo-api-deployment.yaml,earning-demo-web-deployment.yaml
 
-open $(minikube service -n default --url earning-demo-web)
+#open $(minikube service -n default --url earning-demo-web)

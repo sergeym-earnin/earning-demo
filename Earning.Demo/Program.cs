@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,13 +10,39 @@ namespace Earning.Demo
 {
     class Program
     {
+        const int Second = 1000;
         static IConfigurationService Configuration = new ConfigurationService();
         static ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
 
         static string _redisKey;
         static string _busyKey;
 
+
         static Task nextTask;
+        static Task _refreshCounterTask;
+
+        static volatile bool _isWorkerShouldBeBusy = false;
+
+        static object _syncRoot = new object();
+
+        public static bool IsWorkerShouldBeBusy
+        {
+            get
+            {
+                lock (_syncRoot)
+                {
+                    return _isWorkerShouldBeBusy;
+                }
+            }
+            set
+            {
+                lock (_syncRoot)
+                {
+                    _isWorkerShouldBeBusy = value;
+                }
+            }
+        }
+
 
         static void Main(string[] args)
         {
@@ -27,12 +54,28 @@ namespace Earning.Demo
             _redisKey = $"{enviroment.GetDataKey(Configuration.WorkerRedisKey)}";
             _busyKey = Configuration.WorkerBusyKey;
 
+            _refreshCounterTask = StartMonitorBusyKeyTask();
             DoWork();
 
             while (true)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(Second);
             }
+        }
+
+        private static Task StartMonitorBusyKeyTask()
+        {
+            var refreshTask = new Task(() =>
+            {
+                var db = Connection.GetDatabase();
+                while (true)
+                {
+                    IsWorkerShouldBeBusy = db.KeyExists(_busyKey);
+                    Thread.Sleep(Second);
+                }
+            }, TaskCreationOptions.LongRunning);
+            refreshTask.Start();
+            return refreshTask;
         }
 
         private static void DoWork()
@@ -40,7 +83,9 @@ namespace Earning.Demo
             var db = Connection.GetDatabase();
             var value = db.StringGet(_redisKey);
 
-            if(!db.KeyExists(_busyKey))
+            Console.WriteLine($"IsWorkerBusy: {IsWorkerShouldBeBusy}");
+
+            if (!IsWorkerShouldBeBusy)
             {
                 Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
                 db.StringIncrement(_redisKey, 1);
@@ -51,29 +96,39 @@ namespace Earning.Demo
 
             Console.WriteLine("[WORKER BUSY]");
 
-            while (db.KeyExists(_busyKey))
+            ulong _counter = 0;
+
+            while (IsWorkerShouldBeBusy)
             {
+                _counter++;
+                long fib = 0;
                 List<Task> tasks = new List<Task>();
                 for (int ctr = 1; ctr <= 30; ctr++)
                 {
-                    tasks.Add(Task.Factory.StartNew(() => {
-                        var fib = FibonacciNumber(60);
-                        Console.WriteLine($" WORKER BUSY: {fib}");
+                    tasks.Add(Task.Factory.StartNew(() =>
+                    {
+                        for (int i = 1; i < 100; i++)
+                        {
+                            
+                            var result = FibonacciNumber(120);
+                            Interlocked.Exchange(ref fib, result);
+                        }
                     }));
                 }
                 Task.WaitAll(tasks.ToArray());
+                Console.WriteLine($" WORKER BUSY: {_counter} result: {fib}. Is Busy: {IsWorkerShouldBeBusy} ");
             }
 
             DoWork();
         }
 
-        private static decimal FibonacciNumber(decimal n)
+        private static long FibonacciNumber(long n)
         {
-            decimal a = 0;
-            decimal b = 1;
-            decimal tmp;
+            long a = 0;
+            long b = 1;
+            long tmp;
 
-            for (decimal i = 0; i < n; i++)
+            for (long i = 0; i < n; i++)
             {
                 tmp = a;
                 a = b;
