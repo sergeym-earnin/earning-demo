@@ -7,11 +7,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo", "Earning.Dem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Api", "Earning.Demo.Api\Earning.Demo.Api.csproj", "{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{09C509E1-EC4F-438A-8FA3-C4838E16F512}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Web", "Earning.Demo.Web\Earning.Demo.Web.csproj", "{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Earning.Demo.Shared", "Earning.Demo.Shared\Earning.Demo.Shared.csproj", "{179DE22C-DC55-4946-90F8-B9EC284F3CB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{7958A412-10D6-4DEC-9DEA-FAEF4760767F}"
+	ProjectSection(SolutionItems) = preProject
+		Build\build.sh = Build\build.sh
+		Build\docker-compose.yml = Build\docker-compose.yml
+		Build\docker-publish.sh = Build\docker-publish.sh
+		Build\earning-demo-api-ab-deployment.yaml = Build\earning-demo-api-ab-deployment.yaml
+		Build\earning-demo-api-ab-service.yaml = Build\earning-demo-api-ab-service.yaml
+		Build\earning-demo-api-deployment.yaml = Build\earning-demo-api-deployment.yaml
+		Build\earning-demo-api-service.yaml = Build\earning-demo-api-service.yaml
+		Build\earning-demo-deployment.yaml = Build\earning-demo-deployment.yaml
+		Build\earning-demo-service.yaml = Build\earning-demo-service.yaml
+		Build\earning-demo-web-deployment.yaml = Build\earning-demo-web-deployment.yaml
+		Build\earning-demo-web-service.yaml = Build\earning-demo-web-service.yaml
+		Build\kube-run-all.sh = Build\kube-run-all.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,13 +51,6 @@ Global
 		{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}.Release|x64.ActiveCfg = Release|Any CPU
 		{0F26E224-D59F-4587-A20F-C2DC4D2B7EFC}.Release|x64.Build.0 = Release|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Debug|x64.Build.0 = Debug|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Release|x64.ActiveCfg = Release|Any CPU
-		{09C509E1-EC4F-438A-8FA3-C4838E16F512}.Release|x64.Build.0 = Release|Any CPU
 		{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF80265-86BD-47DE-A06B-A6D564ED0F2D}.Debug|x64.ActiveCfg = Debug|Any CPU

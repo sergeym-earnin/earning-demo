@@ -14,11 +14,6 @@
     <ApplicationURL>http://localhost:8081</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="run.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.4" />
   </ItemGroup>
