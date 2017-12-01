@@ -11,42 +11,21 @@ namespace Earning.Demo
     class Program
     {
         const int Second = 1000;
-        static IConfigurationService Configuration = new ConfigurationService();
-        static ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
+        static readonly IConfigurationService Configuration = new ConfigurationService();
+        static readonly ConnectionMultiplexer Connection = ConnectionMultiplexer.Connect(Configuration.RedisConnectionString);
 
         static string _redisKey;
         static string _busyKey;
 
-
         static Task nextTask;
-        static Task _refreshCounterTask;
+        static Task _refreshBusyFlagTask;
 
         static volatile bool _isWorkerShouldBeBusy = false;
-
-        static object _syncRoot = new object();
-
-        public static bool IsWorkerShouldBeBusy
-        {
-            get
-            {
-                lock (_syncRoot)
-                {
-                    return _isWorkerShouldBeBusy;
-                }
-            }
-            set
-            {
-                lock (_syncRoot)
-                {
-                    _isWorkerShouldBeBusy = value;
-                }
-            }
-        }
-
 
         static void Main(string[] args)
         {
             Console.WriteLine("[WORKER STARTED]");
+            Connection.PreserveAsyncOrder = false;
 
             var enviroment = new EnviromentService(Configuration);
             enviroment.StartTracking(Configuration.WorkerRedisKey);
@@ -54,12 +33,21 @@ namespace Earning.Demo
             _redisKey = $"{enviroment.GetDataKey(Configuration.WorkerRedisKey)}";
             _busyKey = Configuration.WorkerBusyKey;
 
-            _refreshCounterTask = StartMonitorBusyKeyTask();
+            _refreshBusyFlagTask = StartMonitorBusyKeyTask();
             DoWork();
 
             while (true)
             {
                 Thread.Sleep(Second);
+                if (_refreshBusyFlagTask.IsFaulted)
+                {
+                    Console.WriteLine("Refresh Faulted");
+                }
+
+                if (_refreshBusyFlagTask.IsCompleted)
+                {
+                    Console.WriteLine("Refresh Completed");
+                }
             }
         }
 
@@ -67,11 +55,23 @@ namespace Earning.Demo
         {
             var refreshTask = new Task(() =>
             {
-                var db = Connection.GetDatabase();
                 while (true)
                 {
-                    IsWorkerShouldBeBusy = db.KeyExists(_busyKey);
-                    Thread.Sleep(Second);
+                    try
+                    {
+                        var db = Connection.GetDatabase();
+                        bool oldValue = _isWorkerShouldBeBusy;
+                        _isWorkerShouldBeBusy = db.KeyExists(_busyKey);
+                        if (oldValue != _isWorkerShouldBeBusy)
+                        {
+                            Console.WriteLine("Is Busy changed to " + _isWorkerShouldBeBusy);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    Thread.Sleep(3 * Second);
                 }
             }, TaskCreationOptions.LongRunning);
             refreshTask.Start();
@@ -83,12 +83,19 @@ namespace Earning.Demo
             var db = Connection.GetDatabase();
             var value = db.StringGet(_redisKey);
 
-            Console.WriteLine($"IsWorkerBusy: {IsWorkerShouldBeBusy}");
+            Console.WriteLine($"IsWorkerBusy: {_isWorkerShouldBeBusy}");
 
-            if (!IsWorkerShouldBeBusy)
+            if (!_isWorkerShouldBeBusy)
             {
                 Console.WriteLine($" WORKER INCREMENT ACTION: {value}");
-                db.StringIncrement(_redisKey, 1);
+                try
+                {
+                    db.StringIncrement(_redisKey, 1);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
                 nextTask = Task.Delay((int)(new TimeSpan(0, 0, 10).TotalMilliseconds))
                     .ContinueWith(t => DoWork());
                 return;
@@ -98,7 +105,7 @@ namespace Earning.Demo
 
             ulong _counter = 0;
 
-            while (IsWorkerShouldBeBusy)
+            while (_isWorkerShouldBeBusy)
             {
                 _counter++;
                 long fib = 0;
@@ -109,14 +116,17 @@ namespace Earning.Demo
                     {
                         for (int i = 1; i < 100; i++)
                         {
-                            
+
                             var result = FibonacciNumber(120);
                             Interlocked.Exchange(ref fib, result);
                         }
                     }));
                 }
                 Task.WaitAll(tasks.ToArray());
-                Console.WriteLine($" WORKER BUSY: {_counter} result: {fib}. Is Busy: {IsWorkerShouldBeBusy} ");
+                if (_counter % 5000 == 0)
+                {
+                    Console.WriteLine($" WORKER BUSY: {_counter} result: {fib}. Is Busy: {_isWorkerShouldBeBusy} ");
+                }
             }
 
             DoWork();

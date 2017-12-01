@@ -7,6 +7,7 @@ pip3 install -r requirements.txt
 #AWS CLI
 pip3 install awscli --upgrade --user
 export PATH=~/.local/bin:$PATH
+chown -R $USER ~/.local
 
 #terraform
 apt install -y unzip

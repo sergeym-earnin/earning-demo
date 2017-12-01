@@ -25,7 +25,11 @@ spec:
               fieldPath: spec.nodeName
         name: earning-demo
         image: msorokovsky/dotnetcore-demoapp:ARGVERSIONTAG-earning.demo
-        resources: {}
+        resources:
+		  requests:
+            cpu: 1
+          limits:
+            cpu: 2
         imagePullPolicy: Always
       imagePullSecrets:
       - name: earning-dh-secret
