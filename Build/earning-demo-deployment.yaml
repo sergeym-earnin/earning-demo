@@ -26,7 +26,7 @@ spec:
         name: earning-demo
         image: msorokovsky/dotnetcore-demoapp:ARGVERSIONTAG-earning.demo
         resources:
-		  requests:
+          requests:
             cpu: 1
           limits:
             cpu: 2

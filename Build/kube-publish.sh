@@ -5,6 +5,8 @@
 #   ./kube-publish.sh 1.0.0 
 #   ./kube-publish.sh
 
+set -e
+
 ARG_VERSION_TAG=${1:-"1.0.0"}
 ARG_APP_PREFIX=${2:-"earning-demo"}
 ARG_AB=${3:-"false"}
@@ -45,7 +47,7 @@ rm -r *.yaml-e
 
 
 file_list=$(ls | awk '{printf "%s,", $1}')
-echo [publish] $file_list containers to Kube
+echo [publish] ${file_list%?} containers to Kube
 kubectl create -f ${file_list%?}
 
 if [ "$ARG_CONTEXT" == "minikube" ]; then

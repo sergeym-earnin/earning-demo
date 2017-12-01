@@ -4,7 +4,7 @@
 #   ./docker-publish.sh 100.0.0
 #   ./docker-publish.sh
 
-ARG_VERSION_NUMBER=$1
+ARG_VERSION_NUMBER=${1:-1.0.0}
 ARG_PROJECT_DIR=$2
 
 repo_pattern="msorokovsky/dotnetcore-demoapp"
