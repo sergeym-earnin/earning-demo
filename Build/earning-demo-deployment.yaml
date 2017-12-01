@@ -24,7 +24,7 @@ spec:
             fieldRef:
               fieldPath: spec.nodeName
         name: earning-demo
-        image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo
+        image: msorokovsky/dotnetcore-demoapp:ARGVERSIONTAG-earning.demo
         resources: {}
         imagePullPolicy: Always
       imagePullSecrets:

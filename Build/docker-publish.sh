@@ -1,9 +1,8 @@
 #!/bin/bash
 # Usage:
-#   ./build.sh 100.0.0 Earning.Demo.Api
-#   ./build.sh 100.0.0
-#   ./build.sh
-# 
+#   ./docker-publish.sh 100.0.0 Earning.Demo.Api
+#   ./docker-publish.sh 100.0.0
+#   ./docker-publish.sh
 
 ARG_VERSION_NUMBER=$1
 ARG_PROJECT_DIR=$2
@@ -17,7 +16,7 @@ docker login -u $docker_user -p $docker_password
 if [ ! -z "$ARG_VERSION_NUMBER" ]; then
     tag_pattern="${ARG_VERSION_NUMBER}"
     if [ ! -z "$ARG_PROJECT_DIR" ]; then
-        service_name="$(echo ${ARG_PROJECT_DIR//./-} | awk '{print tolower($0)}')"
+        service_name="$(echo ${ARG_PROJECT_DIR} | awk '{print tolower($0)}')"
         tag_pattern="$tag_pattern-$service_name"
     fi
 fi

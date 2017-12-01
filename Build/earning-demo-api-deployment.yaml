@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.5.0 ()
   creationTimestamp: null
   labels:
-    io.kompose.service: earning-demo-api
-  name: earning-demo-api
+    io.kompose.service: earning-demo-apiARGABPREFIX
+  name: earning-demo-apiARGABPREFIX
 spec:
   replicas: 1
   strategy: {}
@@ -15,7 +15,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: earning-demo-api
+        io.kompose.service: earning-demo-apiARGABPREFIX
     spec:
       containers:
       - env:
@@ -28,9 +28,9 @@ spec:
         - name: ASPNETCORE_URLS
           value: http://+:80
         - name: DEMO_AB
-          value: false
-        name: earning-demo-api
-        image: msorokovsky/dotnetcore-demoapp:1.0.0-earning.demo.api
+          value: "ARGDEMOAB"
+        name: earning-demo-apiARGABPREFIX
+        image: msorokovsky/dotnetcore-demoapp:ARGVERSIONTAG-earning.demo.api
         resources: {}
         imagePullPolicy: Always
       imagePullSecrets:

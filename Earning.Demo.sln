@@ -15,17 +15,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{7958A412
 	ProjectSection(SolutionItems) = preProject
 		Build\docker-compose.yml = Build\docker-compose.yml
 		Build\docker-publish.sh = Build\docker-publish.sh
-		Build\earning-demo-api-ab-deployment.yaml = Build\earning-demo-api-ab-deployment.yaml
-		Build\earning-demo-api-ab-service.yaml = Build\earning-demo-api-ab-service.yaml
 		Build\earning-demo-api-deployment.yaml = Build\earning-demo-api-deployment.yaml
 		Build\earning-demo-api-service.yaml = Build\earning-demo-api-service.yaml
 		Build\earning-demo-deployment.yaml = Build\earning-demo-deployment.yaml
 		Build\earning-demo-service.yaml = Build\earning-demo-service.yaml
 		Build\earning-demo-web-deployment.yaml = Build\earning-demo-web-deployment.yaml
 		Build\earning-demo-web-service.yaml = Build\earning-demo-web-service.yaml
-		Build\kube-run-all.sh = Build\kube-run-all.sh
 		Build\docker-clean.sh = Build\docker-clean.sh
 		Build\docker-build.sh = Build\docker-build.sh
+		Build\kube-clean.sh = Build\kube-clean.sh
+		Build\kube-publish.sh = Build\kube-publish.sh
 	EndProjectSection
 EndProject
 Global
