@@ -18,10 +18,7 @@ namespace Earning.Demo.Api.Services
             return base.GetAll()
               .Select(i =>
               {
-                  if (i.ApplicationId == _configuration.ApplicationId)
-                  {
-                      i.ApplicationType += "-AB-Testing";
-                  }
+                  i.ApplicationType += "-AB-Testing";
                   return i;
               }).ToList();
         }
