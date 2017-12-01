@@ -1,6 +1,5 @@
 #!/bin/bash
 # Usage:
-#   ./kube-publish.sh 1.0.0 earning-demo false minikube
 #   ./kube-publish.sh 1.0.0 earning-demo false
 #   ./kube-publish.sh 1.0.0 earning-demo 
 #   ./kube-publish.sh 1.0.0 
@@ -9,15 +8,12 @@
 ARG_VERSION_TAG=${1:-"1.0.0"}
 ARG_APP_PREFIX=${2:-"earning-demo"}
 ARG_AB=${3:-"false"}
-ARG_CONTEXT=${4:-"minikube"}
 
 if [ "$ARG_AB" == "true" ]; then
     ARG_AB_PREFIX="-ab"
 else
     ARG_AB_PREFIX=""
 fi
-
-kubectl config use-context $ARG_CONTEXT
 
 if [ -z "$(kubectl get secret earning-dh-secret)" ]; then
     echo [secret] is not exist. Creating new secret ...
